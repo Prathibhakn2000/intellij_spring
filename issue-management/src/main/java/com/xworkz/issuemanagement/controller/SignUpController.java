@@ -66,12 +66,13 @@ public class SignUpController {
             int failedAttempts = signUpService.getFailedAttempts(email);
             System.out.println("Failed attempts for " + email + ": " + failedAttempts);
 
+
             if (failedAttempts >= 3) {
                 signUpService.lockAccount(email); // Lock account after 3 failed attempts
                 model.addAttribute("error", "Your account is locked due to too many failed attempts.");
                 model.addAttribute("accountLocked", true);
             } else {
-                model.addAttribute("error", "Invalid email id and password. Attempts: " + failedAttempts);
+                model.addAttribute("error", "Invalid email address and password. Attempts: " + failedAttempts);
                 model.addAttribute("accountLocked", false);
             }
             //model.addAttribute("error", "Invalid email id and password");

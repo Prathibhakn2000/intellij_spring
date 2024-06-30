@@ -64,10 +64,10 @@ public class SignUpDTO {
     private String password;
 
     @Column(name="failed_attempts")
-    private int failedAttempts;
+    private int failedAttempts=0;
 
     @Column(name="account_locked")
-    private boolean accountLocked;
+    private boolean accountLocked=false;
 
     public String getFirstName() {
         return firstName;

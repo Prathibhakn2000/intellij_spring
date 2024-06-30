@@ -26,11 +26,13 @@ public class SignUpServiceImpl implements   SignUpService{
     public boolean validateAndsave(SignUpDTO signUpDTO) {
         System.out.println("Running validateAndSave method in SignUpserviceImpl");
         String createdBy = signUpDTO.getFirstName(); // or get the current user
+
         LocalDateTime createdOn = LocalDateTime.now();
         String updatedBy = signUpDTO.getFirstName(); // or get the current user
         LocalDateTime updatedOn = null;
         users.put(signUpDTO.getEmail(), signUpDTO); // Simulate saving to a database
         boolean isActive = true;
+
 
         String generatedPassword = PassWordGenerator.generatePassword();
         signUpDTO.setPassword(generatedPassword);
@@ -72,32 +74,62 @@ public class SignUpServiceImpl implements   SignUpService{
         return signUpRepo.findByEmailAndPassword( email, password);
     }
 
+
+
     @Override
     public void incrementFailedAttempts(String email) {
-        int attempts = failedAttemptsMap.getOrDefault(email, 0) + 1;
-        failedAttemptsMap.put(email, attempts);
-        if (attempts >= 3) {
-            lockAccount(email);
+
+//        int attempts = failedAttemptsMap.getOrDefault(email, 0) + 1;
+//        failedAttemptsMap.put(email, attempts);
+//        if (attempts >= 3) {
+//            lockAccount(email);
+        SignUpDTO user = signUpRepo.findByEmail(email);
+        if (user != null) {
+            int attempts = user.getFailedAttempts() + 1;
+            user.setFailedAttempts(attempts);
+            if (attempts >= 3) {
+                user.setAccountLocked(true);
+            }
+            signUpRepo.update(user);
         }
-    }
+        }
 
     @Override
     public int getFailedAttempts(String email) {
-        return failedAttemptsMap.getOrDefault(email, 0);
+        SignUpDTO user = signUpRepo.findByEmail(email);
+        return (user != null) ? user.getFailedAttempts() : 0;
+
     }
 
     @Override
     public void resetFailedAttempts(String email) {
-        failedAttemptsMap.remove(email);
+        SignUpDTO user = signUpRepo.findByEmail(email);
+        if (user != null) {
+            user.setFailedAttempts(0);
+            signUpRepo.update(user);
+        }
+
     }
 
     @Override
     public void lockAccount(String email) {
-        SignUpDTO user = users.get(email);
+        SignUpDTO user = signUpRepo.findByEmail(email);
         if (user != null) {
             user.setAccountLocked(true);
+            signUpRepo.update(user);
         }
-    }
 
+    }
 }
+
+
+//    @Override
+//    public void lockAccount(String email) {
+//        SignUpDTO user = users.get(email);
+//        if (user != null) {
+//            user.setAccountLocked(true);
+//        }
+//    }
+
+
 

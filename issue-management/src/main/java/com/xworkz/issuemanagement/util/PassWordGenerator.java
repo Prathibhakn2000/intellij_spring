@@ -16,7 +16,7 @@ public class PassWordGenerator {
 
 
         public static String generatePassword() {
-            int length = 12;
+            int length = 6;
             boolean useLetters = true;
             boolean useNumbers = true;
             // Generate a password that includes letters and numbers

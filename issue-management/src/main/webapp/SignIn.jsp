@@ -6,7 +6,15 @@
     <meta charset="ISO-8859-1">
     <title>IssueManagement</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script  src="/issue-management/js/SignInValidation.js"></script>
+    <script src="/issue-management/js/SignInValidation.js"></script>
+    <!-- card desiging(highlight)-->
+    <style>
+        .highlight-card {
+            border: 2px solid #f8f9fa;
+            background-color: #f8f9fa;  /* Light background color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow effect */
+        }
+    </style>
     <script>
         function disableButton() {
             var accountLocked = "${accountLocked}";
@@ -20,41 +28,42 @@
 
 <body>
 
-<nav class="navbar navbar-dark bg-info">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
-            </a>
-            <a class="navbar-brand " href="index.jsp"><b>Home</b></a>
-        </div>
+<nav class="navbar navbar-light bg-info">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
+      </a>
+      <a class="navbar-brand" href="index.jsp"><b>Home</b></a>
     </div>
+  </div>
 </nav>
 
-<div class="card border-dark container mt-5 mb-5 justify-content-center">
-    <h3><b><center>SignIn</center></b></h3>
+<div class="d-flex justify-content-center mt-3 mb-2 align-items-center vh-80">
+  <div class="card highlight-card" style="width: 40%; padding: 20px;">
     <div class="card-body">
-        <form action="sign-in" method="post" onsubmit="return validateForm()">
-            <center><strong><span style="color:green">${msg1}</span></strong></center>
-            <center><strong><span style="color:red">${error}</span></strong></center>
+      <h3><b><center>SIGNIN</center></b></h3>
+      <form action="sign-in" method="post">
+        <center><strong><span style="color:green">${msg1}</span></strong></center>
+        <center><strong><span style="color:red">${error}</span></strong></center>
 
-            <div class="row mb-3">
-                <span id="emailError" style="color: red;"></span><br>
-                <label for="email" class="form-label"><b>Email:</b></label>
-                <input type="email" class="form-control" id="email" name="email" onblur="emailValidation()">
-            </div>
+        <div class="mb-3">
+          <span id="emailError" style="color: red;"></span><br>
+          <label for="email" class="form-label"><b>Email address</b></label>
+          <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" onblur="emailValidation()">
+        </div>
 
-            <div class="row mb-3">
-                <span id="passwordError" style="color: red;"></span><br>
-                <label for="password" class="form-label"><b>Password:</b></label>
-                <input type="password" class="form-control" id="password" name="password" onblur="passwordValidation()">
-            </div>
+        <div class="mb-3">
+          <span id="passwordError" style="color: red;"></span><br>
+          <label for="password" class="form-label"><b>Password</b></label>
+          <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" onblur="passwordValidation()">
+        </div>
 
-            <div>
-                <input type="submit"   class="btn btn-primary" value="SignIn" id="signinButton">
-            </div>
-        </form>
+        <button type="submit" class="btn btn-primary" id="signinButton"/>Sign in</button>
+
+      </form>
     </div>
+  </div>
 </div>
 
 </body>
